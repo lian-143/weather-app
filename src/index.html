@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A clean weather dashboard interface for viewing current weather conditions."
+    />
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <main class="weather-shell">
+      <header class="app-header">
+        <h1>Weather App</h1>
+        <p>Get real-time weather information for any location.</p>
+      </header>
+
+      <form class="weather-search" action="#" method="get">
+        <label class="sr-only" for="city">Enter city name</label>
+
+        <div class="search-field">
+          <svg
+            class="search-field__icon"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M12 21s7-6.2 7-12A7 7 0 0 0 5 9c0 5.8 7 12 7 12Z" />
+            <circle cx="12" cy="9" r="2.35" />
+          </svg>
+
+          <input
+            id="city"
+            name="city"
+            type="text"
+            placeholder="Enter city name..."
+            autocomplete="off"
+          />
+        </div>
+
+        <button type="submit" id="submitBtn">Get Weather</button>
+      </form>
+
+      <section class="weather-card" aria-labelledby="weather-location">
+        <div class="weather-card__header">
+          <div>
+            <h2 id="weather-location">London, UK</h2>
+            <p class="weather-date">
+              <span id="dateNow">May 21, 2025</span>
+              <span class="weather-date__dot">•</span>
+              <span id="timeToday">10:30 AM</span>
+            </p>
+          </div>
+
+          <div class="unit-toggle" aria-label="Temperature unit">
+            <input id="unit-c" type="radio" name="temperature-unit" checked />
+            <label for="unit-c">°C</label>
+
+            <input id="unit-f" type="radio" name="temperature-unit" />
+            <label for="unit-f">°F</label>
+          </div>
+        </div>
+
+        <div class="current-weather">
+          <div class="weather-symbol" aria-hidden="true">
+            <svg viewBox="0 0 180 130">
+              <defs>
+                <linearGradient id="cloud-fill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#f4f6f9" />
+                  <stop offset="100%" stop-color="#dce2ea" />
+                </linearGradient>
+              </defs>
+              <g class="weather-symbol__sun">
+                <circle cx="74" cy="55" r="31" />
+                <path d="M74 7v17M74 86v17M26 55h17M105 55h17" />
+                <path d="m40 21 12 12M96 77l12 12M108 21 96 33M52 77 40 89" />
+              </g>
+
+              <g class="weather-symbol__cloud">
+                <path
+                  d="M44 111h87c23 0 38-14 38-34 0-18-14-31-31-32-7-17-23-28-42-28-25 0-45 19-47 44-19 2-33 15-33 31 0 11 8 19 28 19Z"
+                />
+              </g>
+            </svg>
+          </div>
+
+          <div class="temperature-block">
+            <p class="temperature-value">
+              <span id="celciusValue">18</span><sup>°C</sup>
+            </p>
+            <p class="weather-condition">Partly Cloudy</p>
+          </div>
+
+          <p class="feels-like">Feels like <strong>17°C</strong></p>
+        </div>
+
+        <div class="weather-details">
+          <article class="weather-detail">
+            <svg class="detail-icon" viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M16 3C13 8 8 14 8 20a8 8 0 0 0 16 0c0-6-5-12-8-17Z" />
+            </svg>
+
+            <div>
+              <p class="detail-label">Humidity</p>
+              <p class="detail-value">72%</p>
+            </div>
+          </article>
+
+          <article class="weather-detail">
+            <svg class="detail-icon" viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M4 10h15c4 0 4-6 0-6-2 0-3 1-3 3" />
+              <path d="M4 16h21c5 0 5-7 1-7-2 0-3 1-3 3" />
+              <path d="M4 22h14c4 0 4 6 0 6-2 0-3-1-3-3" />
+            </svg>
+
+            <div>
+              <p class="detail-label">Wind</p>
+              <p class="detail-value">14 km/h</p>
+            </div>
+          </article>
+
+          <article class="weather-detail">
+            <svg class="detail-icon" viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M3 16a13 13 0 0 1 26 0Z" />
+              <path d="M16 16v9c0 4 6 4 6 0" />
+              <path d="M8 16v3M16 16v3M24 16v3" />
+            </svg>
+
+            <div>
+              <p class="detail-label">Precipitation</p>
+              <p class="detail-value">20%</p>
+            </div>
+          </article>
+
+          <article class="weather-detail">
+            <svg class="detail-icon" viewBox="0 0 32 32" aria-hidden="true">
+              <path
+                d="M2.5 16S7 9 16 9s13.5 7 13.5 7S25 23 16 23 2.5 16 2.5 16Z"
+              />
+              <circle cx="16" cy="16" r="4" />
+            </svg>
+
+            <div>
+              <p class="detail-label">Visibility</p>
+              <p class="detail-value">10 km</p>
+            </div>
+          </article>
+
+          <article class="weather-detail">
+            <svg class="detail-icon" viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M6 24a11 11 0 1 1 20 0" />
+              <path d="M16 16l7-5" />
+              <path d="M8 18h3M21 18h3M16 8v3" />
+            </svg>
+
+            <div>
+              <p class="detail-label">Pressure</p>
+              <p class="detail-value">1016 hPa</p>
+            </div>
+          </article>
+
+          <article class="weather-detail">
+            <svg class="detail-icon" viewBox="0 0 32 32" aria-hidden="true">
+              <path d="M5 23h22" />
+              <path d="M9 23a7 7 0 0 1 14 0" />
+              <path d="M16 4v5M6 10l3 3M26 10l-3 3M3 18h5M24 18h5" />
+            </svg>
+
+            <div>
+              <p class="detail-label">Sunrise</p>
+              <p class="detail-value">5:05 AM</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <footer class="weather-footer">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M4 12a8 8 0 1 0 2.3-5.7L4 8.6" />
+          <path d="M4 4v4.6h4.6" />
+          <path d="M12 8v4l2.4 1.5" />
+        </svg>
+
+        <p>Data provided by OpenWeatherMap</p>
+      </footer>
+    </main>
+  </body>
+  <script type="module" src="./index.js"></script>
+</html>
