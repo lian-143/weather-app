@@ -144,7 +144,6 @@ async function currentConditions(weatherData) {
 }
 
 function getCelcius(fahrenheit) {
-  // celcius
   // The exact formula is: °C = (°F - 32) × 5/9
   const fahrenheitFormula = Math.floor(((fahrenheit - 32) * 5) / 9);
   return fahrenheitFormula;
