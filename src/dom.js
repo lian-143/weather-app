@@ -7,6 +7,10 @@ const weatherLocation = document.getElementById("weather-location");
 const celciusValue = document.getElementById("celciusValue");
 const dateNow = document.getElementById("dateNow");
 const timeToday = document.getElementById("timeToday");
+const weatherCondition = document.getElementById("weather-condition");
+const feelsLikeCondition = document.getElementById("feelsLike");
+const detailValueHumidity = document.getElementById("detailValue");
+const windSpeed = document.getElementById("windSpeed");
 
 submitBtn.addEventListener("click", async (event) => {
   const locationValue = inputLocation.value.trim();
@@ -22,21 +26,19 @@ async function currentConditions(location) {
   console.log(weatherData);
   // location
   weatherLocation.textContent = weatherData.address;
-  // celcius
-  // The exact formula is: °C = (°F - 32) × 5/9
-  const tempCelcius = ((weatherData.currentConditions.temp - 32) * 5) / 9;
-  celciusValue.textContent = Math.floor(tempCelcius);
+  // temperature
+  const temperature = weatherData.currentConditions.temp;
+  celciusValue.textContent = getCelcius(temperature);
   // get the date and time
-  // date
   const dateMonth = weatherData.days[0].datetime;
   const time = weatherData.currentConditions.datetime;
+  // split date and month for formatting
+  const splitDate = dateMonth.split("-");
   const splitTime = time.split(":");
-  console.log(splitTime);
   const [hours, minutes] = splitTime;
+  // change to number
   const hourValue = Number(hours);
   const minutesValue = Number(minutes);
-  const splitDate = dateMonth.split("-");
-  console.log(splitDate);
   const [year, month, day] = splitDate;
   const yearNumber = Number(year);
   const monthNumber = Number(month) - 1;
@@ -51,26 +53,42 @@ async function currentConditions(location) {
     month: "long",
     day: "numeric",
   };
-  const fullDate = date.toLocaleDateString("en-US", options);
-  dateNow.textContent = fullDate;
 
-  // text content for time
+  const fullDate = date.toLocaleDateString("en-US", options);
   const timeContent = date.toLocaleTimeString("en-US", {
     hour: "2-digit",
     minute: "2-digit",
     timeZone: "UTC",
   });
 
+  // text content for date and time
+  dateNow.textContent = fullDate;
   timeToday.textContent = timeContent;
 
-  // get the time
-  // const time = new Date(weatherData.days[0].hours[0].datetime);
-  // console.log(time);
-  // console.log(time.toLocaleTimeString("en-US"));
+  /////////weather condition//////////////
+  const condition = weatherData.currentConditions.conditions;
+  const splitCondition = condition.split(",");
+  weatherCondition.textContent = splitCondition[0];
+  console.log(splitCondition);
 
-  // toLocaleTimeString() without arguments depends on the implementation,
-  // the default locale, and the default time zone
-  // console.log(time.toLocaleTimeString());
-  // "7:00:00 PM" if run in en-US locale with time zone America/Los_Angeles
+  //////////feels like//////
+  const feelsLike = weatherData.currentConditions.feelslike;
+  feelsLikeCondition.textContent = `${getCelcius(feelsLike)}°C`;
+
+  ////////humidity/////
+  const humidity = weatherData.currentConditions.humidity;
+  detailValueHumidity.textContent = `${Math.floor(humidity)}%`;
+
+  /////////wind//////////////
+  const windSpeedValue = Math.floor(weatherData.currentConditions.windspeed);
+  windSpeed.textContent = `${windSpeedValue} km/h`;
 }
+
+function getCelcius(fahrenheit) {
+  // celcius
+  // The exact formula is: °C = (°F - 32) × 5/9
+  const fahrenheitFormula = Math.floor(((fahrenheit - 32) * 5) / 9);
+  return fahrenheitFormula;
+}
+
 export { submitBtn };
