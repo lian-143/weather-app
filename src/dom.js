@@ -11,21 +11,54 @@ const weatherCondition = document.getElementById("weather-condition");
 const feelsLikeCondition = document.getElementById("feelsLike");
 const detailValueHumidity = document.getElementById("detailValue");
 const windSpeed = document.getElementById("windSpeed");
+const precipitation = document.getElementById("precipitation");
+const visibility = document.getElementById("visibility");
+const pressure = document.getElementById("pressure");
+const sunrise = document.getElementById("sunrise");
+const celciusBtn = document.getElementById("unit-c");
+const fahrenheitBtn = document.getElementById("unit-f");
+let location = "Caloocan";
+let weatherData = null;
 
 submitBtn.addEventListener("click", async (event) => {
+  event.preventDefault();
   const locationValue = inputLocation.value.trim();
+  if (!locationValue) return;
   let locationCapitalized =
     locationValue.charAt(0).toUpperCase() + locationValue.slice(1);
-  event.preventDefault();
 
-  currentConditions(locationCapitalized);
+  await getWeatherData(locationCapitalized);
 });
 
-async function currentConditions(location) {
-  const weatherData = await getWeather(location);
+//celcius button
+celciusBtn.addEventListener("click", (event) => {
+  const temperature = Math.floor(weatherData.currentConditions.temp);
+  celciusValue.textContent = `${getCelcius(temperature)}°C`;
+  //////////feels like//////
+  const feelsLike = weatherData.currentConditions.feelslike;
+  feelsLikeCondition.textContent = `${getCelcius(feelsLike)}°C`;
+});
+
+fahrenheitBtn.addEventListener("click", (e) => {
+  const temperature = Math.floor(weatherData.currentConditions.temp);
+  celciusValue.textContent = `${temperature}°F`;
+  const feelsLike = weatherData.currentConditions.feelslike;
+  feelsLikeCondition.textContent = `${feelsLike}°F`;
+});
+
+async function getWeatherData(location) {
+  weatherData = await getWeather(location);
+  currentConditions(weatherData);
+  const temperature = Math.floor(weatherData.currentConditions.temp);
+  celciusValue.textContent = `${getCelcius(temperature)}°C`;
+
+  weatherLocation.textContent =
+    weatherData.address ?? weatherData.resolvedAddress;
   console.log(weatherData);
-  // location
-  weatherLocation.textContent = weatherData.address;
+  return weatherData;
+}
+
+async function currentConditions(weatherData) {
   // temperature
   const temperature = weatherData.currentConditions.temp;
   celciusValue.textContent = getCelcius(temperature);
@@ -67,13 +100,9 @@ async function currentConditions(location) {
 
   /////////weather condition//////////////
   const condition = weatherData.currentConditions.conditions;
-  const splitCondition = condition.split(",");
-  weatherCondition.textContent = splitCondition[0];
-  console.log(splitCondition);
-
-  //////////feels like//////
-  const feelsLike = weatherData.currentConditions.feelslike;
-  feelsLikeCondition.textContent = `${getCelcius(feelsLike)}°C`;
+  // const splitCondition = condition.split(",");
+  weatherCondition.textContent = condition;
+  console.log(condition);
 
   ////////humidity/////
   const humidity = weatherData.currentConditions.humidity;
@@ -82,6 +111,36 @@ async function currentConditions(location) {
   /////////wind//////////////
   const windSpeedValue = Math.floor(weatherData.currentConditions.windspeed);
   windSpeed.textContent = `${windSpeedValue} km/h`;
+
+  ///////////precipitation/////////////
+  const precipitationValue = Math.floor(
+    weatherData.currentConditions.precipprob,
+  );
+  precipitation.textContent = `${precipitationValue}%`;
+
+  ////////////visibility/////////////
+  const visibilityValue = Math.floor(weatherData.currentConditions.visibility);
+  visibility.textContent = `${visibilityValue} km/h`;
+
+  ////////pressure///////////
+  const pressureValue = Math.floor(weatherData.currentConditions.pressure);
+  pressure.textContent = `${pressureValue} hPA`;
+
+  //////////////sunrise/////////////////
+  const sunriseTime = weatherData.currentConditions.sunrise;
+  const splitTimeSunrise = time.split(":");
+  const [hoursSunrise, minutesSunrise] = splitTimeSunrise;
+  const hourValueSunrise = Number(hoursSunrise);
+  const minutesValueSunrise = Number(minutesSunrise);
+  const timeSunrise = new Date(Date.UTC(hourValueSunrise, minutesValueSunrise));
+  const timeContentSunrise = timeSunrise.toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "UTC",
+  });
+  sunrise.textContent = timeContentSunrise;
+
+  return weatherData;
 }
 
 function getCelcius(fahrenheit) {
@@ -91,4 +150,5 @@ function getCelcius(fahrenheit) {
   return fahrenheitFormula;
 }
 
+getWeatherData(location);
 export { submitBtn };

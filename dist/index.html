@@ -46,11 +46,11 @@
       <section class="weather-card" aria-labelledby="weather-location">
         <div class="weather-card__header">
           <div>
-            <h2 id="weather-location">London, UK</h2>
+            <h2 id="weather-location">Caloocan</h2>
             <p class="weather-date">
-              <span>May 21, 2025</span>
+              <span id="dateNow">May 21, 2025</span>
               <span class="weather-date__dot">•</span>
-              <span>10:30 AM</span>
+              <span id="timeToday">10:30 AM</span>
             </p>
           </div>
 
@@ -87,11 +87,15 @@
           </div>
 
           <div class="temperature-block">
-            <p class="temperature-value"><span>18</span><sup>°C</sup></p>
-            <p class="weather-condition">Partly Cloudy</p>
+            <p class="temperature-value">
+              <span id="celciusValue">18°C</span>
+            </p>
+            <p id="weather-condition">Partly Cloudy</p>
           </div>
 
-          <p class="feels-like">Feels like <strong>17°C</strong></p>
+          <p class="feels-like">
+            Feels like <strong id="feelsLike">17°C</strong>
+          </p>
         </div>
 
         <div class="weather-details">
@@ -102,7 +106,7 @@
 
             <div>
               <p class="detail-label">Humidity</p>
-              <p class="detail-value">72%</p>
+              <p class="detail-value" id="detailValue">72%</p>
             </div>
           </article>
 
@@ -115,7 +119,7 @@
 
             <div>
               <p class="detail-label">Wind</p>
-              <p class="detail-value">14 km/h</p>
+              <p class="detail-value" id="windSpeed">14 km/h</p>
             </div>
           </article>
 
@@ -128,7 +132,7 @@
 
             <div>
               <p class="detail-label">Precipitation</p>
-              <p class="detail-value">20%</p>
+              <p class="detail-value" id="precipitation">20%</p>
             </div>
           </article>
 
@@ -142,7 +146,7 @@
 
             <div>
               <p class="detail-label">Visibility</p>
-              <p class="detail-value">10 km</p>
+              <p class="detail-value" id="visibility">10 km</p>
             </div>
           </article>
 
@@ -155,7 +159,7 @@
 
             <div>
               <p class="detail-label">Pressure</p>
-              <p class="detail-value">1016 hPa</p>
+              <p class="detail-value" id="pressure">1016 hPa</p>
             </div>
           </article>
 
@@ -168,7 +172,7 @@
 
             <div>
               <p class="detail-label">Sunrise</p>
-              <p class="detail-value">5:05 AM</p>
+              <p class="detail-value" id="sunrise">5:05 AM</p>
             </div>
           </article>
         </div>
@@ -181,7 +185,7 @@
           <path d="M12 8v4l2.4 1.5" />
         </svg>
 
-        <p>Data provided by OpenWeatherMap</p>
+        <p>Data provided by VisualCrossingWebServices</p>
       </footer>
     </main>
   </body>
